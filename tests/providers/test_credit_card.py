@@ -1,7 +1,7 @@
 import re
 
-from faker.providers.bank.ru_RU import Provider as RuRuBankProvider
-from faker.providers.credit_card import Provider as CreditCardProvider
+from randum.providers.bank.ru_RU import Provider as RuRuBankProvider
+from randum.providers.credit_card import Provider as CreditCardProvider
 
 
 class TestCreditCardProvider:
@@ -14,64 +14,64 @@ class TestCreditCardProvider:
     diners_club_pattern = re.compile(r'3(?:0[0-5]|[68][0-9])[0-9]{11}')
     jcb_pattern = re.compile(r'(?:2131|1800|35\d{3})\d{11}')
 
-    def test_mastercard(self, faker, num_samples):
-        provider = CreditCardProvider(faker)
+    def test_mastercard(self, randum, num_samples):
+        provider = CreditCardProvider(randum)
         for prefix in provider.prefix_mastercard:
             for _ in range(num_samples):
                 number = provider._generate_number(prefix, 16)
                 assert len(number) == 16
                 assert self.mastercard_pattern.fullmatch(number)
 
-    def test_visa13(self, faker, num_samples):
-        provider = CreditCardProvider(faker)
+    def test_visa13(self, randum, num_samples):
+        provider = CreditCardProvider(randum)
         for prefix in provider.prefix_visa:
             for _ in range(num_samples):
                 number = provider._generate_number(prefix, 13)
                 assert len(number) == 13
                 assert self.visa_pattern.fullmatch(number)
 
-    def test_visa16(self, faker, num_samples):
-        provider = CreditCardProvider(faker)
+    def test_visa16(self, randum, num_samples):
+        provider = CreditCardProvider(randum)
         for prefix in provider.prefix_visa:
             for _ in range(num_samples):
                 number = provider._generate_number(prefix, 16)
                 assert len(number) == 16
                 assert self.visa_pattern.fullmatch(number)
 
-    def test_visa19(self, faker, num_samples):
-        provider = CreditCardProvider(faker)
+    def test_visa19(self, randum, num_samples):
+        provider = CreditCardProvider(randum)
         for prefix in provider.prefix_visa:
             for _ in range(num_samples):
                 number = provider._generate_number(prefix, 19)
                 assert len(number) == 19
                 assert self.visa_pattern.fullmatch(number)
 
-    def test_discover(self, faker, num_samples):
-        provider = CreditCardProvider(faker)
+    def test_discover(self, randum, num_samples):
+        provider = CreditCardProvider(randum)
         for prefix in provider.prefix_discover:
             for _ in range(num_samples):
                 number = provider._generate_number(prefix, 16)
                 assert len(number) == 16
                 assert self.discover_pattern.fullmatch(number)
 
-    def test_diners_club(self, faker, num_samples):
-        provider = CreditCardProvider(faker)
+    def test_diners_club(self, randum, num_samples):
+        provider = CreditCardProvider(randum)
         for prefix in provider.prefix_diners:
             for _ in range(num_samples):
                 number = provider._generate_number(prefix, 14)
                 assert len(number) == 14
                 assert self.diners_club_pattern.fullmatch(number)
 
-    def test_jcb16(self, faker, num_samples):
-        provider = CreditCardProvider(faker)
+    def test_jcb16(self, randum, num_samples):
+        provider = CreditCardProvider(randum)
         for prefix in provider.prefix_jcb16:
             for _ in range(num_samples):
                 number = provider._generate_number(prefix, 16)
                 assert len(number) == 16
                 assert self.jcb_pattern.fullmatch(number)
 
-    def test_jcb15(self, faker, num_samples):
-        provider = CreditCardProvider(faker)
+    def test_jcb15(self, randum, num_samples):
+        provider = CreditCardProvider(randum)
         for prefix in provider.prefix_jcb15:
             for _ in range(num_samples):
                 number = provider._generate_number(prefix, 15)
@@ -90,39 +90,39 @@ class TestRuRu:
     amex_pattern = re.compile(r'3[4|7][0-9]{13}')
     unionpay_pattern = re.compile(r'(?:62|81)[0-9]{14}')
 
-    def test_visa(self, faker, num_samples):
+    def test_visa(self, randum, num_samples):
         for _ in range(num_samples):
-            number = faker.credit_card_number('visa')
+            number = randum.credit_card_number('visa')
             assert self.visa_pattern.fullmatch(number)
 
-    def test_mastercard(self, faker, num_samples):
+    def test_mastercard(self, randum, num_samples):
         for _ in range(num_samples):
-            number = faker.credit_card_number('mastercard')
+            number = randum.credit_card_number('mastercard')
             assert self.mastercard_pattern.fullmatch(number)
 
-    def test_mir(self, faker, num_samples):
+    def test_mir(self, randum, num_samples):
         for _ in range(num_samples):
-            number = faker.credit_card_number('mir')
+            number = randum.credit_card_number('mir')
             assert self.mir_pattern.fullmatch(number)
 
-    def test_maestro(self, faker, num_samples):
+    def test_maestro(self, randum, num_samples):
         for _ in range(num_samples):
-            number = faker.credit_card_number('maestro')
+            number = randum.credit_card_number('maestro')
             assert self.maestro_pattern.fullmatch(number)
 
-    def test_amex(self, faker, num_samples):
+    def test_amex(self, randum, num_samples):
         for _ in range(num_samples):
-            number = faker.credit_card_number('amex')
+            number = randum.credit_card_number('amex')
             assert self.amex_pattern.fullmatch(number)
 
-    def test_unionpay(self, faker, num_samples):
+    def test_unionpay(self, randum, num_samples):
         for _ in range(num_samples):
-            number = faker.credit_card_number('unionpay')
+            number = randum.credit_card_number('unionpay')
             assert self.unionpay_pattern.fullmatch(number)
 
-    def test_credit_card_full(self, faker, num_samples):
+    def test_credit_card_full(self, randum, num_samples):
         for _ in range(num_samples):
-            card_data = faker.credit_card_full().split('\n')
+            card_data = randum.credit_card_full().split('\n')
             assert re.match('[A-Za-z]+', card_data[1])
             assert card_data[4] in RuRuBankProvider.banks
 
@@ -134,17 +134,17 @@ class TestPtPt:
     mastercard_pattern = re.compile(r'5[1-5][0-9]{14}')
     maestro_pattern = re.compile(r'(50|67)[0-9]{14}')
 
-    def test_visa(self, faker, num_samples):
+    def test_visa(self, randum, num_samples):
         for _ in range(num_samples):
-            number = faker.credit_card_number('visa')
+            number = randum.credit_card_number('visa')
             assert self.visa_pattern.fullmatch(number)
 
-    def test_mastercard(self, faker, num_samples):
+    def test_mastercard(self, randum, num_samples):
         for _ in range(num_samples):
-            number = faker.credit_card_number('mastercard')
+            number = randum.credit_card_number('mastercard')
             assert self.mastercard_pattern.fullmatch(number)
 
-    def test_maestro(self, faker, num_samples):
+    def test_maestro(self, randum, num_samples):
         for _ in range(num_samples):
-            number = faker.credit_card_number('maestro')
+            number = randum.credit_card_number('maestro')
             assert self.maestro_pattern.fullmatch(number)

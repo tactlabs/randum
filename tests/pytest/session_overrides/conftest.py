@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-EXCLUSIVE_SESSION_FLAG = '--exclusive-faker-session'
+EXCLUSIVE_SESSION_FLAG = '--exclusive-randum-session'
 SKIP_REASON = (
     f'This test is skipped by default since it depends on changes in the behavior of session-scoped fixtures. '
     f'Use a separate pytest run for tests like this with the "{EXCLUSIVE_SESSION_FLAG}" flag specified.'

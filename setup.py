@@ -12,7 +12,7 @@ VERSION = (here / 'VERSION').read_text(encoding='utf-8').strip()
 
 excluded_packages = ["docs", "tests", "tests.*"]
 if not os.environ.get('READTHEDOCS', False):
-    excluded_packages += ["faker.sphinx", "faker.sphinx.*"]
+    excluded_packages += ["randum.sphinx", "randum.sphinx.*"]
 
 
 # this module can be zip-safe if the zipimporter implements iter_modules or if
@@ -26,13 +26,13 @@ except AttributeError:
     zip_safe = False
 
 setup(
-    name='Faker',
+    name='Randum',
     version=VERSION,
-    description="Faker is a Python package that generates fake data for you.",
+    description="Randum is a Python package that generates fake data for you.",
     long_description=README,
     entry_points={
-        'console_scripts': ['faker=faker.cli:execute_from_command_line'],
-        'pytest11': ['faker = faker.contrib.pytest.plugin'],
+        'console_scripts': ['randum=randum.cli:execute_from_command_line'],
+        'pytest11': ['randum = randum.contrib.pytest.plugin'],
     },
     classifiers=[
         # See https://pypi.org/pypi?%3Aaction=list_classifiers
@@ -53,14 +53,14 @@ setup(
         'Topic :: Utilities',
         'License :: OSI Approved :: MIT License',
     ],
-    keywords='faker fixtures data test mock generator',
+    keywords='randum fixtures data test mock generator',
     author='joke2k',
     author_email='joke2k@gmail.com',
-    url='https://github.com/joke2k/faker',
+    url='https://github.com/joke2k/randum',
     license='MIT License',
     packages=find_packages(exclude=excluded_packages),
     package_data={
-        "faker": ["py.typed"],
+        "randum": ["py.typed"],
     },
     platforms=["any"],
     zip_safe=zip_safe,

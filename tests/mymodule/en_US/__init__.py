@@ -1,4 +1,4 @@
-from faker.providers import BaseProvider
+from randum.providers import BaseProvider
 
 
 class Provider(BaseProvider):

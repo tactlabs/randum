@@ -4,14 +4,14 @@ import unittest
 from importlib import import_module
 from pathlib import Path
 
-import faker
+import randum
 
-from faker.config import META_PROVIDERS_MODULES, PROVIDERS
-from faker.generator import random
-from faker.utils.checksums import calculate_luhn, luhn_checksum
-from faker.utils.datasets import add_dicts
-from faker.utils.distribution import choices_distribution, choices_distribution_unique
-from faker.utils.loading import find_available_locales, find_available_providers, get_path
+from randum.config import META_PROVIDERS_MODULES, PROVIDERS
+from randum.generator import random
+from randum.utils.checksums import calculate_luhn, luhn_checksum
+from randum.utils.datasets import add_dicts
+from randum.utils.distribution import choices_distribution, choices_distribution_unique
+from randum.utils.loading import find_available_locales, find_available_providers, get_path
 
 TEST_DIR = Path(__file__).resolve().parent
 
@@ -62,7 +62,7 @@ class UtilsTestCase(unittest.TestCase):
         assert result == {'a': 1, 'c': 3, 'b': 3, 'd': 4}
 
     def test_get_path(self):
-        result = get_path(faker)
+        result = get_path(randum)
         assert isinstance(result, str)
 
     def test_find_available_locales(self):
@@ -74,28 +74,28 @@ class UtilsTestCase(unittest.TestCase):
         providers = find_available_providers(modules)
 
         expected_providers = list(map(str, [
-            'faker.providers.address',
-            'faker.providers.automotive',
-            'faker.providers.bank',
-            'faker.providers.barcode',
-            'faker.providers.color',
-            'faker.providers.company',
-            'faker.providers.credit_card',
-            'faker.providers.currency',
-            'faker.providers.date_time',
-            'faker.providers.file',
-            'faker.providers.geo',
-            'faker.providers.internet',
-            'faker.providers.isbn',
-            'faker.providers.job',
-            'faker.providers.lorem',
-            'faker.providers.misc',
-            'faker.providers.person',
-            'faker.providers.phone_number',
-            'faker.providers.profile',
-            'faker.providers.python',
-            'faker.providers.ssn',
-            'faker.providers.user_agent',
+            'randum.providers.address',
+            'randum.providers.automotive',
+            'randum.providers.bank',
+            'randum.providers.barcode',
+            'randum.providers.color',
+            'randum.providers.company',
+            'randum.providers.credit_card',
+            'randum.providers.currency',
+            'randum.providers.date_time',
+            'randum.providers.file',
+            'randum.providers.geo',
+            'randum.providers.internet',
+            'randum.providers.isbn',
+            'randum.providers.job',
+            'randum.providers.lorem',
+            'randum.providers.misc',
+            'randum.providers.person',
+            'randum.providers.phone_number',
+            'randum.providers.profile',
+            'randum.providers.python',
+            'randum.providers.ssn',
+            'randum.providers.user_agent',
         ]))
         assert providers == expected_providers
 

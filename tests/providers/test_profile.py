@@ -1,6 +1,6 @@
 import unittest
 
-from faker import Faker
+from randum import Randum
 
 
 class TestProfileProvider(unittest.TestCase):
@@ -9,8 +9,8 @@ class TestProfileProvider(unittest.TestCase):
     num_samples = 10
 
     def setUp(self):
-        self.fake = Faker()
-        Faker.seed(0)
+        self.fake = Randum()
+        Randum.seed(0)
 
     def test_simple_profile(self):
         for _ in range(self.num_samples):

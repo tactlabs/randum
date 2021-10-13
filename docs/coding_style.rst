@@ -22,7 +22,7 @@ Name Lists
 
 When you have long lists of names, please order them alphabetically. Keep the lines length as close as possible to 120 characters, without exceeding the limit.
 
-.. _`tox.ini`: https://github.com/joke2k/faker/blob/master/tox.ini
+.. _`tox.ini`: https://github.com/joke2k/randum/blob/master/tox.ini
 .. _`pep 8`: https://python.org/dev/peps/pep-0008
 .. _`pep 263`: https://python.org/dev/peps/pep-0263
 .. _`type hints`: https://docs.python.org/3/library/typing.html

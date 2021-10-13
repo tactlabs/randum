@@ -1,4 +1,4 @@
-* Faker version:
+* Randum version:
 * OS:
 
 Brief summary of the issue goes here.

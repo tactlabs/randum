@@ -1,7 +1,7 @@
 [paths]
-source = faker/
+source = randum/
 
 [run]
 omit =
-    faker/sphinx/autodoc.py
-    faker/sphinx/documentor.py
+    randum/sphinx/autodoc.py
+    randum/sphinx/documentor.py

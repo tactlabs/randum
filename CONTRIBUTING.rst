@@ -44,4 +44,4 @@ Additional Resources
    documentation <https://help.github.com/articles/about-pull-requests>`__
 
 
-.. _`coding style`: https://github.com/joke2k/faker/blob/master/docs/coding_style.rst
+.. _`coding style`: https://github.com/joke2k/randum/blob/master/docs/coding_style.rst

@@ -31,7 +31,7 @@ named ``method1``. That short line of text will automatically generate a sample 
 
 .. code-block:: python
 
-   >>> Faker.seed(0)
+   >>> Randum.seed(0)
    >>> for _ in range(5):
    ...     fake.method1()
    ...
@@ -49,7 +49,7 @@ behavior of the method, so that can be done using ``KWARGS``. Putting it all tog
 
 .. code-block:: python
 
-   >>> Faker.seed(0)
+   >>> Randum.seed(0)
    >>> for _ in range(10):
    ...     fake.method1(a=1, b=2, c=3)
    ...
@@ -72,7 +72,7 @@ specify ``:sample seed=12345: a=2``, the sample usage section generated will loo
 
 .. code-block:: python
 
-   >>> Faker.seed(12345)
+   >>> Randum.seed(12345)
    >>> for _ in range(5):
    ...     fake.method1(a=2)
    ...
@@ -97,7 +97,7 @@ The sample section usage generated will look something like this:
 
 .. code-block:: python
 
-   >>> Faker.seed(12345)
+   >>> Randum.seed(12345)
    >>> for _ in range(25):
    ...     fake.method1(arg1='very long value, unfortunately', arg2='yet another long value')
    ...
@@ -154,7 +154,7 @@ resulting docstring will have an ``:examples:`` section appended to the end. In 
 
        :examples:
 
-       >>> Faker.seed(0)
+       >>> Randum.seed(0)
        >>> for _ in range(5):
        ...     fake.foo()
        ...
@@ -164,7 +164,7 @@ resulting docstring will have an ``:examples:`` section appended to the end. In 
        1
        1
 
-       >>> Faker.seed(1000)
+       >>> Randum.seed(1000)
        >>> for _ in range(10):
        ...     fake.foo()
        ...
@@ -205,12 +205,12 @@ performing basic arithmetic will fail the validation. Details of failed validati
 to the console as a warning.
 
 To further improve security, all of the potentially dangerous code used for this purpose have been
-isolated into the ``faker.sphinx`` module, and this module will be excluded from release distributions
+isolated into the ``randum.sphinx`` module, and this module will be excluded from release distributions
 that are hosted in PyPI.
 
 If you are interested in learning more or in performing a security audit on how sample validation is
-implemented, please refer to the source code and docstrings of ``faker.sphinx.validator.SampleCodeValidator``
-and ``faker.sphinx.docstring.ProviderMethodDocstring``.
+implemented, please refer to the source code and docstrings of ``randum.sphinx.validator.SampleCodeValidator``
+and ``randum.sphinx.docstring.ProviderMethodDocstring``.
 
 Sample generation
 -----------------

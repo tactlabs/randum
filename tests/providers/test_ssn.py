@@ -13,27 +13,27 @@ from validators.i18n.es import es_cif as is_cif
 from validators.i18n.es import es_nie as is_nie
 from validators.i18n.es import es_nif as is_nif
 
-from faker import Faker
-from faker.providers.ssn.en_CA import checksum as ca_checksum
-from faker.providers.ssn.es_MX import curp_checksum as mx_curp_checksum
-from faker.providers.ssn.es_MX import ssn_checksum as mx_ssn_checksum
-from faker.providers.ssn.et_EE import checksum as et_checksum
-from faker.providers.ssn.fi_FI import Provider as fi_Provider
-from faker.providers.ssn.hr_HR import checksum as hr_checksum
-from faker.providers.ssn.no_NO import Provider as no_Provider
-from faker.providers.ssn.no_NO import checksum as no_checksum
-from faker.providers.ssn.pl_PL import calculate_month as pl_calculate_mouth
-from faker.providers.ssn.pl_PL import checksum as pl_checksum
-from faker.providers.ssn.pt_BR import checksum as pt_checksum
-from faker.providers.ssn.ro_RO import ssn_checksum as ro_ssn_checksum
-from faker.providers.ssn.ro_RO import vat_checksum as ro_vat_checksum
-from faker.utils.checksums import luhn_checksum
+from randum import Randum
+from randum.providers.ssn.en_CA import checksum as ca_checksum
+from randum.providers.ssn.es_MX import curp_checksum as mx_curp_checksum
+from randum.providers.ssn.es_MX import ssn_checksum as mx_ssn_checksum
+from randum.providers.ssn.et_EE import checksum as et_checksum
+from randum.providers.ssn.fi_FI import Provider as fi_Provider
+from randum.providers.ssn.hr_HR import checksum as hr_checksum
+from randum.providers.ssn.no_NO import Provider as no_Provider
+from randum.providers.ssn.no_NO import checksum as no_checksum
+from randum.providers.ssn.pl_PL import calculate_month as pl_calculate_mouth
+from randum.providers.ssn.pl_PL import checksum as pl_checksum
+from randum.providers.ssn.pt_BR import checksum as pt_checksum
+from randum.providers.ssn.ro_RO import ssn_checksum as ro_ssn_checksum
+from randum.providers.ssn.ro_RO import vat_checksum as ro_vat_checksum
+from randum.utils.checksums import luhn_checksum
 
 
 class TestSvSE(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('sv_SE')
-        Faker.seed(0)
+        self.fake = Randum('sv_SE')
+        Randum.seed(0)
 
     def partial_sum(self, number, mult_factor):
         quotient, remainder = divmod(number * mult_factor, 10)
@@ -141,8 +141,8 @@ class TestSvSE(unittest.TestCase):
 
 class TestBgBG(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('bg_BG')
-        Faker.seed(0)
+        self.fake = Randum('bg_BG')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -151,8 +151,8 @@ class TestBgBG(unittest.TestCase):
 
 class TestCsCZ(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('cs_CZ')
-        Faker.seed(0)
+        self.fake = Randum('cs_CZ')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -168,8 +168,8 @@ class TestCsCZ(unittest.TestCase):
 
 class TestSkSK(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('sk_SK')
-        Faker.seed(0)
+        self.fake = Randum('sk_SK')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -185,8 +185,8 @@ class TestSkSK(unittest.TestCase):
 
 class TestDeAT(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('de_AT')
-        Faker.seed(0)
+        self.fake = Randum('de_AT')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -195,8 +195,8 @@ class TestDeAT(unittest.TestCase):
 
 class TestElCY(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('el_CY')
-        Faker.seed(0)
+        self.fake = Randum('el_CY')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -205,8 +205,8 @@ class TestElCY(unittest.TestCase):
 
 class TestElGr(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('el_GR')
-        Faker.seed(0)
+        self.fake = Randum('el_GR')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -219,8 +219,8 @@ class TestElGr(unittest.TestCase):
 
 class TestEnCA(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('en_CA')
-        Faker.seed(0)
+        self.fake = Randum('en_CA')
+        Randum.seed(0)
 
     def test_ssn(self):
         for _ in range(100):
@@ -236,8 +236,8 @@ class TestEnCA(unittest.TestCase):
 
 class TestEnUS(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('en_US')
-        Faker.seed(0)
+        self.fake = Randum('en_US')
+        Randum.seed(0)
 
     def test_ssn(self):
         for _ in range(100):
@@ -371,7 +371,7 @@ class TestEnUS(unittest.TestCase):
         # is one that would (if not specifically checked for) return an
         # SSN with an area of '666'.
 
-        Faker.seed(19031)
+        Randum.seed(19031)
         ssn = self.fake.ssn()
         [area, group, serial] = ssn.split('-')
         assert area != '666'
@@ -523,8 +523,8 @@ class TestEnUS(unittest.TestCase):
 
 class TestEsES(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('es_ES')
-        Faker.seed(0)
+        self.fake = Randum('es_ES')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -548,14 +548,14 @@ class TestEsES(unittest.TestCase):
 
 class TestEsCA(TestEsES):
     def setUp(self):
-        self.fake = Faker('es_CA')
-        Faker.seed(0)
+        self.fake = Randum('es_CA')
+        Randum.seed(0)
 
 
 class TestEsMX(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('es_MX')
-        Faker.seed(0)
+        self.fake = Randum('es_MX')
+        Randum.seed(0)
 
     def test_ssn(self):
         for _ in range(100):
@@ -592,8 +592,8 @@ class TestEtEE(unittest.TestCase):
     """ Tests SSN in the et_EE locale """
 
     def setUp(self):
-        self.fake = Faker('et_EE')
-        Faker.seed(0)
+        self.fake = Randum('et_EE')
+        Randum.seed(0)
 
     def test_ssn_checksum(self):
         assert et_checksum([4, 4, 1, 1, 1, 3, 0, 4, 9, 2]) == 3
@@ -643,8 +643,8 @@ class TestFiFI(unittest.TestCase):
     """ Tests SSN in the fi_FI locale """
 
     def setUp(self):
-        self.fake = Faker('fi_FI')
-        Faker.seed(0)
+        self.fake = Randum('fi_FI')
+        Randum.seed(0)
         self.provider = fi_Provider
 
     def test_century_code(self):
@@ -680,8 +680,8 @@ class TestFiFI(unittest.TestCase):
 
 class TestFrFR(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('fr_FR')
-        Faker.seed(0)
+        self.fake = Randum('fr_FR')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -701,11 +701,11 @@ class TestFrCH:
     def test_checksum(self, digits, expected):
         """The checksum of the Swiss UID number is calculated correctly
         given a certain input of 8 digits."""
-        fake = Faker("fr_CH")
-        Faker.seed(0)
+        fake = Randum("fr_CH")
+        Randum.seed(0)
 
         with mock.patch(
-            "faker.providers.ssn.fr_CH.Provider.numerify",
+            "randum.providers.ssn.fr_CH.Provider.numerify",
             return_value=digits,
             autospec=True,
         ):
@@ -715,8 +715,8 @@ class TestFrCH:
 
 class TestEnGB(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('en_GB')
-        Faker.seed(0)
+        self.fake = Randum('en_GB')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -727,8 +727,8 @@ class TestHrHR(unittest.TestCase):
     """ Tests SSN in the hr_HR locale """
 
     def setUp(self):
-        self.fake = Faker('hr_HR')
-        Faker.seed(0)
+        self.fake = Randum('hr_HR')
+        Randum.seed(0)
 
     def test_ssn_checksum(self):
         assert hr_checksum([0, 0, 2, 2, 8, 2, 6, 9, 2, 8]) == 9
@@ -749,8 +749,8 @@ class TestHrHR(unittest.TestCase):
 
 class TestHuHU(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('hu_HU')
-        Faker.seed(0)
+        self.fake = Randum('hu_HU')
+        Randum.seed(0)
 
     def test_ssn(self):
         for _ in range(100):
@@ -780,8 +780,8 @@ class TestHuHU(unittest.TestCase):
 
 class TestPtBR(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('pt_BR')
-        Faker.seed(0)
+        self.fake = Randum('pt_BR')
+        Randum.seed(0)
 
     def test_pt_BR_ssn_checksum(self):
         assert pt_checksum([8, 8, 2, 8, 2, 1, 6, 5, 2]) == 2
@@ -806,8 +806,8 @@ class TestPtBR(unittest.TestCase):
 
 class TestNlNL(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('nl_NL')
-        Faker.seed(0)
+        self.fake = Randum('nl_NL')
+        Randum.seed(0)
 
     def test_vat_id(self):
         for _ in range(100):
@@ -816,8 +816,8 @@ class TestNlNL(unittest.TestCase):
 
 class TestNoNO(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('no_NO')
-        Faker.seed(0)
+        self.fake = Randum('no_NO')
+        Randum.seed(0)
 
     def test_no_NO_ssn_checksum(self):
         assert no_checksum([0, 1, 0, 2, 0, 3, 9, 8, 7], no_Provider.scale1) == 6
@@ -861,8 +861,8 @@ class TestPlPL(unittest.TestCase):
     """ Tests SSN in the pl_PL locale """
 
     def setUp(self):
-        self.fake = Faker('pl_PL')
-        Faker.seed(0)
+        self.fake = Randum('pl_PL')
+        Randum.seed(0)
 
     def test_ssn_checksum(self):
         assert pl_checksum([0, 5, 2, 6, 2, 8, 1, 2, 3, 6]) == 5
@@ -906,11 +906,11 @@ class TestEnPh(unittest.TestCase):
         self.philhealth_pattern = re.compile(r'^\d{2}-\d{9}-\d$')
         self.pagibig_pattern = re.compile(r'^\d{4}-\d{4}-\d{4}$')
         self.umid_pattern = re.compile(r'^\d{4}-\d{7}-\d$')
-        self.setup_faker()
+        self.setup_randum()
 
-    def setup_faker(self):
-        self.fake = Faker('en_PH')
-        Faker.seed(0)
+    def setup_randum(self):
+        self.fake = Randum('en_PH')
+        Randum.seed(0)
 
     def test_PH_sss(self):
         for i in range(self.num_sample_runs):
@@ -935,15 +935,15 @@ class TestEnPh(unittest.TestCase):
 
 class TestFilPh(TestEnPh):
 
-    def setup_faker(self):
-        self.fake = Faker('fil_PH')
-        Faker.seed(0)
+    def setup_randum(self):
+        self.fake = Randum('fil_PH')
+        Randum.seed(0)
 
 
 class TestThTH(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('th_TH')
-        Faker.seed(0)
+        self.fake = Randum('th_TH')
+        Randum.seed(0)
 
     def test_ssn(self):
         for _ in range(100):
@@ -956,18 +956,18 @@ class TestThTH(unittest.TestCase):
 
 class TestTlPh(TestEnPh):
 
-    def setup_faker(self):
-        self.fake = Faker('tl_PH')
-        Faker.seed(0)
+    def setup_randum(self):
+        self.fake = Randum('tl_PH')
+        Randum.seed(0)
 
 
 class TestTrTr(unittest.TestCase):
     num_sample_runs = 10
 
     def setUp(self):
-        self.fake = Faker('tr_TR')
+        self.fake = Randum('tr_TR')
         self.samples = [self.fake.ssn() for _ in range(self.num_sample_runs)]
-        Faker.seed(0)
+        Randum.seed(0)
 
     def first_part_non_zero(self):
         for sample in self.samples:
@@ -982,8 +982,8 @@ class TestTrTr(unittest.TestCase):
 
 class TestEnIn(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('en_IN')
-        Faker.seed(0)
+        self.fake = Randum('en_IN')
+        Randum.seed(0)
         test_samples = 10
         self.aadhaar_ids = [self.fake.aadhaar_id() for _ in range(test_samples)]
 
@@ -1002,8 +1002,8 @@ class TestEnIn(unittest.TestCase):
 
 class TestZhCN(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('zh_CN')
-        Faker.seed(0)
+        self.fake = Randum('zh_CN')
+        Randum.seed(0)
 
     def test_zh_CN_ssn(self):
         for _ in range(100):
@@ -1031,8 +1031,8 @@ class TestRoRO(unittest.TestCase):
     """ Tests SSN in the ro_RO locale """
 
     def setUp(self):
-        self.fake = Faker('ro_RO')
-        Faker.seed(0)
+        self.fake = Randum('ro_RO')
+        Randum.seed(0)
 
     def test_ssn_checksum(self):
         assert ro_ssn_checksum('188050510739') == 0

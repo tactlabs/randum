@@ -1,33 +1,33 @@
-Using the Faker Class
+Using the Randum Class
 =====================
 
-In version ``2.0.4`` and below, the ``Faker`` object is just a shortcut for the class method
+In version ``2.0.4`` and below, the ``Randum`` object is just a shortcut for the class method
 ``Factory.create``, and that method creates a ``Generator`` object with access to the wide
 selection of provider methods. Because of how everything was set up, it was difficult to do
 certain things without going through the ``Factory`` and ``Generator`` internals and without
 potentially breaking a lot of things that will be difficult for users to fix when they upgrade.
 
-The solution was to introduce a new ``Faker`` proxy class that will, for the most part, behave
-just like the old ``Faker`` shortcut but with support for multiple locales while providing the
+The solution was to introduce a new ``Randum`` proxy class that will, for the most part, behave
+just like the old ``Randum`` shortcut but with support for multiple locales while providing the
 option to subclass and a very simple upgrade path should old code be affected. For the purposes
-of this document, the terms new ``Faker`` and old ``Faker`` will be used where the former refers
+of this document, the terms new ``Randum`` and old ``Randum`` will be used where the former refers
 to the new proxy class, and the latter refers to the ``Factory.create`` shortcut.
 
 Breaking Change
 ---------------
 
-Any codebase that uses the ``Faker.seed()`` method will be affected, because while both old and
-new ``Faker.seed()`` points to ``Generator.seed()``, in new ``Faker``, invocation of the method
-from a ``Faker`` object instance has been disabled, and attempting to do so will raise a
+Any codebase that uses the ``Randum.seed()`` method will be affected, because while both old and
+new ``Randum.seed()`` points to ``Generator.seed()``, in new ``Randum``, invocation of the method
+from a ``Randum`` object instance has been disabled, and attempting to do so will raise a
 ``TypeError`` as shown below.
 
 .. code:: python
 
-    TypeError: Calling `.seed()` on instances is deprecated. Use the class method `Faker.seed()` instead.
+    TypeError: Calling `.seed()` on instances is deprecated. Use the class method `Randum.seed()` instead.
 
 The rationale can be found in `the relevant PR`_, but the goal is to deal with a non-explicit
 legacy behavior involving a shared ``random.Random`` instance that we believe can only become
-more confusing once new ``Faker`` is added.
+more confusing once new ``Randum`` is added.
 
 Upgrade Guide
 -------------
@@ -36,47 +36,47 @@ Suppose that the affected code looks something like this:
 
 .. code:: python
 
-    from faker import Faker
-    fake = Faker()
+    from randum import Randum
+    fake = Randum()
     fake.seed(0)  # This will raise a TypeError
 
-Just replace all `seed()` method calls from instances with ``Faker.seed()`` as shown below. This
-is all that is needed to start using the new ``Faker`` class and its features, even if additional
-arguments are passed to ``Faker``, because the arguments expected by new ``Faker`` and old
-``Faker`` are the same.
+Just replace all `seed()` method calls from instances with ``Randum.seed()`` as shown below. This
+is all that is needed to start using the new ``Randum`` class and its features, even if additional
+arguments are passed to ``Randum``, because the arguments expected by new ``Randum`` and old
+``Randum`` are the same.
 
 .. code:: python
 
-    from faker import Faker
-    fake = Faker()
-    Faker.seed(0)
+    from randum import Randum
+    fake = Randum()
+    Randum.seed(0)
 
-A conservative approach is to redefine ``Faker`` as the old shortcut shown below. This will skip
+A conservative approach is to redefine ``Randum`` as the old shortcut shown below. This will skip
 using the new proxy class, but the code will still be able to use any new provider methods moving
 forward while being unaffected by new bugs. Of course, that also means there will be no multiple
 locale support and no option to subclass.
 
 .. code:: python
 
-    from faker.factory import Factory
-    Faker = Factory.create
-    fake = Faker()
+    from randum.factory import Factory
+    Randum = Factory.create
+    fake = Randum()
     fake.seed(0)
 
 Proxy Class Implementation Details
 ----------------------------------
 
-A new ``Faker`` instance is just a proxy object that has references to ``Generator`` objects,
+A new ``Randum`` instance is just a proxy object that has references to ``Generator`` objects,
 one for each unique locale specified at instantiation. Those ``Generator`` objects are just
-"instances" of old ``Faker``. If there is only one internal ``Generator`` object, the new
-``Faker`` instance is running in single locale mode. If there is more than one, then it is
+"instances" of old ``Randum``. If there is only one internal ``Generator`` object, the new
+``Randum`` instance is running in single locale mode. If there is more than one, then it is
 running in multiple locale mode.
 
-In single locale mode, a new ``Faker`` instance can easily be forced to behave like an instance
-created using old ``Faker``, because a similar interface can be exposed on the new ``Faker``
+In single locale mode, a new ``Randum`` instance can easily be forced to behave like an instance
+created using old ``Randum``, because a similar interface can be exposed on the new ``Randum``
 instance, and then proxy calls to methods, properties, and attributes to the sole ``Generator``
 object in a 1:1 fashion. In fact, that is how it is implemented and how backwards compatibility
-was preserved (save for ``Faker.seed``).
+was preserved (save for ``Randum.seed``).
 
 In multiple locale mode, however, that 1:1 mapping is no longer present, and how calls are proxied
 depends on whether the attribute is a provider method or some attribute present in ``Generator``
@@ -114,7 +114,7 @@ Factory/generator selection will be discussed in more detail under multiple loca
 Locale Normalization
 --------------------
 
-Depending on the ``locale`` value passed, a new ``Faker`` instance will either operate in single
+Depending on the ``locale`` value passed, a new ``Randum`` instance will either operate in single
 locale mode or multiple locale mode. The value of ``locale`` can be one of the following:
 
 1. Any empty value like ``None`` (automatically defaults to ``en_US``)
@@ -123,8 +123,8 @@ locale mode or multiple locale mode. The value of ``locale`` can be one of the f
 4. An OrderedDict with key-value pairs of valid locale strings (underscored or
    hyphenated) and weights
 
-The first two are options already expected by old ``Faker``, so it is pretty much the same for new
-``Faker``. Using any of those two options will always result in a new ``Faker`` instance that is
+The first two are options already expected by old ``Randum``, so it is pretty much the same for new
+``Randum``. Using any of those two options will always result in a new ``Randum`` instance that is
 in single locale mode. In that mode, there is really no need to retrieve a reference to the
 internal ``Generator`` object because of the 1:1 proxying behavior discussed earlier.
 
@@ -133,19 +133,19 @@ The potential pitfalls lie in multiple locale mode and when there is a need to a
 hyphenated (``en-US``), this can lead to confusion and errors, so locale strings have to be normalized
 to provide consistent results without duplicates.
 
-During instantiation, new ``Faker`` will normalize locale strings to the underscore format, and it
+During instantiation, new ``Randum`` will normalize locale strings to the underscore format, and it
 will also store them as such. In other words, the locale string ``en_US`` will be treated the same
 as ``en-US``, and when both are specified, the last to be processed will be treated as a duplicate
 and will be discarded. The same normalization is also performed when accessing the internal
 ``Generator`` object via key index.
 
-For example, the code below will create a new ``Faker`` instance that is in single locale mode
+For example, the code below will create a new ``Randum`` instance that is in single locale mode
 even if four locales were specified.
 
 .. code:: python
 
-    from faker import Faker
-    fake = Faker(['en-US', 'en_US', 'en_US', 'en-US'])
+    from randum import Randum
+    fake = Randum(['en-US', 'en_US', 'en_US', 'en-US'])
 
     # Will return ['en_US']
     fake.locales
@@ -170,10 +170,10 @@ OrderedDict with more than one valid locale, post-normalization. For example:
 .. code:: python
 
     from collections import OrderedDict
-    from faker import Faker
+    from randum import Randum
 
     locale_list = ['en-US', 'ja-JP', 'en_US']
-    fake1 = Faker(locale_list)
+    fake1 = Randum(locale_list)
 
     # Will return ['en_US', 'ja_JP']
     fake1.locales
@@ -183,12 +183,12 @@ OrderedDict with more than one valid locale, post-normalization. For example:
         ('ja-JP', 2),
         ('en_US', 2),
     ])
-    fake2 = Faker(locale_odict)
+    fake2 = Randum(locale_odict)
 
     # Will return ['en_US', 'ja_JP']
     fake2.locales
 
-In this mode, calling a prospective provider method from the new ``Faker`` instance will run
+In this mode, calling a prospective provider method from the new ``Randum`` instance will run
 factory/selection logic in this order:
 
 1. Check if a cached mapping already exists for the provider method. If yes, use that mapping,
@@ -197,7 +197,7 @@ factory/selection logic in this order:
    the results of the mapping, along with corresponding weights if they were provided during
    instantiation.
 3. If no generator supports the provider method, an AttributeError will be raised just as it
-   would have been raised using old ``Faker``.
+   would have been raised using old ``Randum``.
 4. If there is only one generator that supports the provider method, return the only generator.
 5. If there is more than one applicable generator, and no weights were provided, randomly select
    a generator using a uniform distribution, i.e. ``random.choice``.
@@ -212,23 +212,23 @@ Examples
 --------
 
 There are times when it is much easier to show than it is to explain in words, so here is
-a cheatsheet for new ``Faker`` in multiple locale mode.
+a cheatsheet for new ``Randum`` in multiple locale mode.
 
 .. code:: python
 
     from collections import OrderedDict
-    from faker import Faker
+    from randum import Randum
     locales = OrderedDict([
         ('en-US', 1),
         ('en-PH', 2),
         ('ja_JP', 3),
     ])
-    fake = Faker(locales)
+    fake = Randum(locales)
 
     # Get the list of locales specified during instantiation
     fake.locales
 
-    # Get the list of internal generators of this `Faker` instance
+    # Get the list of internal generators of this `Randum` instance
     fake.factories
 
     # Get the internal generator for 'en_US' locale
@@ -245,14 +245,14 @@ a cheatsheet for new ``Faker`` in multiple locale mode.
 
     # Set the seed value of the shared `random.Random` object
     # across all internal generators that will ever be created
-    Faker.seed(0)
+    Randum.seed(0)
 
     # Creates and seeds a unique `random.Random` object for
-    # each internal generator of this `Faker` instance
+    # each internal generator of this `Randum` instance
     fake.seed_instance(0)
 
     # Creates and seeds a unique `random.Random` object for
-    # the en_US internal generator of this `Faker` instance
+    # the en_US internal generator of this `Randum` instance
     fake.seed_locale('en_US', 0)
 
     # Generate a name based on the provided weights
@@ -286,24 +286,24 @@ a cheatsheet for new ``Faker`` in multiple locale mode.
     # Will raise an AttributeError
     fake['ja_JP'].luzon_province()
 
-.. _the relevant PR: https://github.com/joke2k/faker/pull/1052#issuecomment-557170225
+.. _the relevant PR: https://github.com/joke2k/randum/pull/1052#issuecomment-557170225
 
 
 Unique Values
 -------------
 
 New in version ``v4.2.0` is the ``.unique`` attribute on the
-``Faker`` proxy.
+``Randum`` proxy.
 
 Accessing provider methods through this attribute guarantees that
-the returned values are unique for the lifetime of the ``Faker`` instance.
+the returned values are unique for the lifetime of the ``Randum`` instance.
 
 
 .. code:: python
 
-   import faker
+   import randum
    
-   fake = faker.Faker()
+   fake = randum.Randum()
 
    numbers = set(fake.unique.random_int() for i in range(1000))
    assert len(numbers) == 1000
@@ -317,9 +317,9 @@ a uniqueness pool.
 
 .. code:: python
 
-   import faker
+   import randum
    
-   fake = faker.Faker()
+   fake = randum.Randum()
 
    numbers = set(fake.unique.random_int(min=1, max=10) for i in range(10))
    other_numbers = set(fake.unique.random_int(min=1, max=5) for i in range(5))
@@ -336,9 +336,9 @@ be raised.
 
 .. code:: python
 
-   import faker
+   import randum
    
-   fake = faker.Faker()
+   fake = randum.Randum()
 
    for i in range(3):
         fake.unique.boolean()  # UniquenessException!
@@ -351,8 +351,8 @@ fast membership testing.
 
 .. code:: python
 
-   import faker
+   import randum
    
-   fake = faker.Faker()
+   fake = randum.Randum()
 
    fake.unique.profile()  # TypeError: unhashable type: 'dict'
