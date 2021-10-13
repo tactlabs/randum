@@ -4,8 +4,8 @@ import inspect
 from unittest import mock
 from unittest.mock import MagicMock
 
-from faker.config import DEFAULT_LOCALE
-from faker.sphinx.docstring import DEFAULT_SAMPLE_SIZE, DEFAULT_SEED, ProviderMethodDocstring, Sample
+from randum.config import DEFAULT_LOCALE
+from randum.sphinx.docstring import DEFAULT_SAMPLE_SIZE, DEFAULT_SEED, ProviderMethodDocstring, Sample
 
 
 class TestProviderMethodDocstring:
@@ -19,14 +19,14 @@ class TestProviderMethodDocstring:
 
     def test_name_is_not_dotted_path_to_provider_method(self):
         docstring = ProviderMethodDocstring(
-            app=MagicMock(), what='method',  name='faker.sphinx.docstring.ProviderMethodDocString._parse',
+            app=MagicMock(), what='method',  name='randum.sphinx.docstring.ProviderMethodDocString._parse',
             obj=MagicMock, options=MagicMock(), lines=MagicMock(),
         )
         assert docstring.skipped
 
     def test_name_is_dotted_path_to_base_provider_method(self):
         docstring = ProviderMethodDocstring(
-            app=MagicMock(), what='method',  name='faker.providers.BaseProvider.bothify',
+            app=MagicMock(), what='method',  name='randum.providers.BaseProvider.bothify',
             obj=MagicMock, options=MagicMock(), lines=MagicMock(),
         )
         assert not docstring.skipped
@@ -35,7 +35,7 @@ class TestProviderMethodDocstring:
 
     def test_name_is_dotted_path_to_standard_provider_method(self):
         docstring = ProviderMethodDocstring(
-            app=MagicMock(), what='method', name='faker.providers.barcode.Provider.upc_a',
+            app=MagicMock(), what='method', name='randum.providers.barcode.Provider.upc_a',
             obj=MagicMock, options=MagicMock(), lines=MagicMock(),
         )
         assert not docstring.skipped
@@ -45,17 +45,17 @@ class TestProviderMethodDocstring:
     def test_name_is_dotted_path_to_localized_provider_method(self):
         docstring = ProviderMethodDocstring(
             app=MagicMock(), what='method',
-            name='faker.providers.automotive.en_PH.Provider.protocol_license_plate',
+            name='randum.providers.automotive.en_PH.Provider.protocol_license_plate',
             obj=MagicMock, options=MagicMock(), lines=MagicMock(),
         )
         assert not docstring.skipped
         assert docstring._method == 'protocol_license_plate'
         assert docstring._locale == 'en_PH'
 
-    @mock.patch('faker.sphinx.docstring.logger.warning')
+    @mock.patch('randum.sphinx.docstring.logger.warning')
     def test_log_warning(self, mock_logger_warning):
         path = inspect.getfile(MagicMock)
-        name = 'faker.providers.color.Provider'
+        name = 'randum.providers.color.Provider'
         docstring = ProviderMethodDocstring(
             app=MagicMock(), what='method', name=name,
             obj=MagicMock, options=MagicMock(), lines=MagicMock(),
@@ -80,7 +80,7 @@ class TestProviderMethodDocstring:
         assert not kwargs
         assert args[0] == f'{path}:docstring of {name}: WARNING: Test Warning 2'
 
-    def test_stringify_results(self, faker):
+    def test_stringify_results(self, randum):
 
         class TestObject:
 
@@ -89,7 +89,7 @@ class TestProviderMethodDocstring:
 
         docstring = ProviderMethodDocstring(
             app=MagicMock(), what='method',
-            name='faker.providers.BaseProvider.bothify',
+            name='randum.providers.BaseProvider.bothify',
             obj=MagicMock, options=MagicMock(), lines=[],
         )
         results = [
@@ -106,7 +106,7 @@ class TestProviderMethodDocstring:
             [1, 2, 3, 4, 5],                # Other non-primitives
             (1, 2, 3, 4, 5),
             {1: 2, 2: 3, 3: 4, 4: 5},
-            faker.uuid4(cast_to=None),
+            randum.uuid4(cast_to=None),
             TestObject(),
         ]
         output = [docstring._stringify_result(result) for result in results]
@@ -132,7 +132,7 @@ class TestProviderMethodDocstring:
     def test_parsing_empty_lines(self, mock_log_warning):
         docstring = ProviderMethodDocstring(
             app=MagicMock(), what='method',
-            name='faker.providers.BaseProvider.bothify',
+            name='randum.providers.BaseProvider.bothify',
             obj=MagicMock, options=MagicMock(), lines=[],
         )
         assert not docstring.skipped
@@ -143,7 +143,7 @@ class TestProviderMethodDocstring:
     def test_parsing_single_line_non_sample(self, mock_log_warning):
         docstring = ProviderMethodDocstring(
             app=MagicMock(), what='method',
-            name='faker.providers.BaseProvider.bothify',
+            name='randum.providers.BaseProvider.bothify',
             obj=MagicMock, options=MagicMock(), lines=['lorem'],
         )
         assert not docstring.skipped
@@ -154,7 +154,7 @@ class TestProviderMethodDocstring:
     def test_parsing_single_line_valid_sample(self, mock_log_warning):
         docstring = ProviderMethodDocstring(
             app=MagicMock(), what='method',
-            name='faker.providers.BaseProvider.bothify',
+            name='randum.providers.BaseProvider.bothify',
             obj=MagicMock, options=MagicMock(), lines=[':sample: a=1'],
         )
         assert not docstring.skipped
@@ -218,14 +218,14 @@ class TestProviderMethodDocstring:
         ]
         docstring = ProviderMethodDocstring(
             app=MagicMock(), what='method',
-            name='faker.providers.BaseProvider.bothify',
+            name='randum.providers.BaseProvider.bothify',
             obj=MagicMock, options=MagicMock(), lines=lines,
         )
         assert not docstring.skipped
         assert docstring._samples == expected_output
 
     @mock.patch.object(ProviderMethodDocstring, '_log_warning')
-    def test_end_to_end_sample_generation(self, mock_warning, faker):
+    def test_end_to_end_sample_generation(self, mock_warning, randum):
         non_sample_lines = ['lorem', 'ipsum', 'dolor', 'sit', 'amet']
         valid_sample_lines = [
             ":sample 1234jdbvhjdbygdvbhxjhx",           # Will fail during sample section processing, 1st log warning
@@ -240,7 +240,7 @@ class TestProviderMethodDocstring:
         lines = non_sample_lines + valid_sample_lines
         docstring = ProviderMethodDocstring(
             app=MagicMock(), what='method',
-            name='faker.providers.BaseProvider.bothify',
+            name='randum.providers.BaseProvider.bothify',
             obj=MagicMock, options=MagicMock(), lines=lines,
         )
 
@@ -248,34 +248,34 @@ class TestProviderMethodDocstring:
         assert output[0] == ':examples:'
 
         # 1st sample generation
-        faker.seed_instance(1000)
+        randum.seed_instance(1000)
         assert output[1] == ''
-        assert output[2] == '>>> Faker.seed(1000)'
+        assert output[2] == '>>> Randum.seed(1000)'
         assert output[3] == '>>> for _ in range(5):'
         assert output[4] == "...     fake.bothify(text='???###')"
         assert output[5] == '...'
         for i in range(6, 11):
-            assert output[i] == docstring._stringify_result(faker.bothify(text='???###'))
+            assert output[i] == docstring._stringify_result(randum.bothify(text='???###'))
 
         # 2nd sample generation
-        faker.seed_instance(3210)
+        randum.seed_instance(3210)
         assert output[11] == ''
-        assert output[12] == '>>> Faker.seed(3210)'
+        assert output[12] == '>>> Randum.seed(3210)'
         assert output[13] == '>>> for _ in range(5):'
         assert output[14] == "...     fake.bothify(letters='abcde')"
         assert output[15] == '...'
         for i in range(16, 21):
-            assert output[i] == docstring._stringify_result(faker.bothify(letters='abcde'))
+            assert output[i] == docstring._stringify_result(randum.bothify(letters='abcde'))
 
         # 3rd sample generation
-        faker.seed_instance(1234)
+        randum.seed_instance(1234)
         assert output[21] == ''
-        assert output[22] == '>>> Faker.seed(1234)'
+        assert output[22] == '>>> Randum.seed(1234)'
         assert output[23] == '>>> for _ in range(20):'
         assert output[24] == "...     fake.bothify(text='???###', letters='abcde')"
         assert output[25] == '...'
         for i in range(26, 46):
-            assert output[i] == docstring._stringify_result(faker.bothify(text='???###', letters='abcde'))
+            assert output[i] == docstring._stringify_result(randum.bothify(text='???###', letters='abcde'))
 
         calls = mock_warning.call_args_list
         assert len(calls) == 4

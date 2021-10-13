@@ -5,10 +5,10 @@ import unittest
 
 import pytest
 
-from faker import Faker, Generator
-from faker.factory import Factory
-from faker.generator import random
-from faker.utils import decorators, text
+from randum import Randum, Generator
+from randum.factory import Factory
+from randum.generator import random
+from randum.utils import decorators, text
 
 
 class FactoryTestCase(unittest.TestCase):
@@ -17,41 +17,41 @@ class FactoryTestCase(unittest.TestCase):
         self.generator = Generator()
 
     def test_documentor(self):
-        from faker.cli import print_doc
+        from randum.cli import print_doc
         output = io.StringIO()
         print_doc(output=output)
         print_doc('address', output=output)
-        print_doc('faker.providers.person.it_IT', output=output)
+        print_doc('randum.providers.person.it_IT', output=output)
         assert output.getvalue()
 
     def test_command(self):
-        from faker.cli import Command
+        from randum.cli import Command
         orig_stdout = sys.stdout
         try:
             sys.stdout = io.StringIO()
-            command = Command(['faker', 'address'])
+            command = Command(['randum', 'address'])
             command.execute()
             assert sys.stdout.getvalue()
         finally:
             sys.stdout = orig_stdout
 
     def test_command_custom_provider(self):
-        from faker.cli import Command
+        from randum.cli import Command
         orig_stdout = sys.stdout
         try:
             sys.stdout = io.StringIO()
-            command = Command(['faker', 'foo', '-i', 'tests.mymodule.en_US'])
+            command = Command(['randum', 'foo', '-i', 'tests.mymodule.en_US'])
             command.execute()
             assert sys.stdout.getvalue()
         finally:
             sys.stdout = orig_stdout
 
     def test_cli_seed(self):
-        from faker.cli import Command
+        from randum.cli import Command
         orig_stdout = sys.stdout
         try:
             sys.stdout = io.StringIO()
-            base_args = ['faker', 'address']
+            base_args = ['randum', 'address']
             target_args = ['--seed', '967']
             commands = [Command(base_args + target_args), Command(base_args + target_args)]
             cli_output = [None] * 2
@@ -64,11 +64,11 @@ class FactoryTestCase(unittest.TestCase):
             sys.stdout = orig_stdout
 
     def test_cli_seed_with_repeat(self):
-        from faker.cli import Command
+        from randum.cli import Command
         orig_stdout = sys.stdout
         try:
             sys.stdout = io.StringIO()
-            base_args = ['faker', 'address', '-r', '3']
+            base_args = ['randum', 'address', '-r', '3']
             target_args = ['--seed', '967']
             commands = [Command(base_args + target_args), Command(base_args + target_args)]
             cli_output = [None] * 2
@@ -81,11 +81,11 @@ class FactoryTestCase(unittest.TestCase):
             sys.stdout = orig_stdout
 
     def test_cli_verbosity(self):
-        from faker.cli import Command
+        from randum.cli import Command
         orig_stdout = sys.stdout
         try:
             sys.stdout = io.StringIO()
-            base_args = ['faker', 'address', '--seed', '769']
+            base_args = ['randum', 'address', '--seed', '769']
             target_args = ['-v']
             commands = [Command(base_args), Command(base_args + target_args)]
             cli_output = [None] * 2
@@ -138,7 +138,7 @@ class FactoryTestCase(unittest.TestCase):
         assert slug == 'abcé'
 
     def test_binary(self):
-        from faker.providers.misc import Provider
+        from randum.providers.misc import Provider
         provider = Provider(self.generator)
 
         for _ in range(999):
@@ -157,7 +157,7 @@ class FactoryTestCase(unittest.TestCase):
             assert binary1 == binary2
 
     def test_password(self):
-        from faker.providers.misc import Provider
+        from randum.providers.misc import Provider
         provider = Provider(self.generator)
 
         def in_string(char, _str):
@@ -177,13 +177,13 @@ class FactoryTestCase(unittest.TestCase):
     def test_prefix_suffix_always_string(self):
         # Locales known to contain `*_male` and `*_female`.
         for locale in ("bg_BG", "dk_DK", "en", "ru_RU", "tr_TR"):
-            fake = Faker(locale=locale)
+            fake = Randum(locale=locale)
             for x in range(20):  # Probabilistic testing.
                 self.assertIsInstance(fake.prefix(), str)
                 self.assertIsInstance(fake.suffix(), str)
 
     def test_random_pystr_characters(self):
-        from faker.providers.python import Provider
+        from randum.providers.python import Provider
         provider = Provider(self.generator)
 
         characters = provider.pystr()
@@ -198,7 +198,7 @@ class FactoryTestCase(unittest.TestCase):
         assert (len(characters) >= 10)
 
     def test_random_pyfloat(self):
-        from faker.providers.python import Provider
+        from randum.providers.python import Provider
         provider = Provider(self.generator)
 
         assert 0 <= abs(provider.pyfloat(left_digits=1)) < 10
@@ -209,8 +209,8 @@ class FactoryTestCase(unittest.TestCase):
             provider.pyfloat(left_digits=0, right_digits=0)
 
     def test_pyfloat_in_range(self):
-        # tests for https://github.com/joke2k/faker/issues/994
-        fake = Faker()
+        # tests for https://github.com/joke2k/randum/issues/994
+        fake = Randum()
 
         for i in range(20):
             for min_value, max_value in [
@@ -229,34 +229,34 @@ class FactoryTestCase(unittest.TestCase):
                     assert result <= max_value
 
     def test_negative_pyfloat(self):
-        # tests for https://github.com/joke2k/faker/issues/813
-        fake = Faker()
+        # tests for https://github.com/joke2k/randum/issues/813
+        fake = Randum()
         fake.seed_instance(32167)
         assert any(fake.pyfloat(left_digits=0, positive=False) < 0 for _ in range(100))
         assert any(fake.pydecimal(left_digits=0, positive=False) < 0 for _ in range(100))
 
     def test_arbitrary_digits_pydecimal(self):
-        # tests for https://github.com/joke2k/faker/issues/1462
-        fake = Faker()
+        # tests for https://github.com/joke2k/randum/issues/1462
+        fake = Randum()
         assert any(
             len(str(fake.pydecimal(left_digits=sys.float_info.dig + i))) > sys.float_info.dig for i in range(100)
         )
         assert any(len(str(fake.pydecimal())) > sys.float_info.dig for _ in range(100))
 
     def test_pyfloat_empty_range_error(self):
-        # tests for https://github.com/joke2k/faker/issues/1048
-        fake = Faker()
+        # tests for https://github.com/joke2k/randum/issues/1048
+        fake = Randum()
         fake.seed_instance(8038)
         assert fake.pyfloat(max_value=9999) < 9999
 
     def test_pyfloat_same_min_max(self):
-        # tests for https://github.com/joke2k/faker/issues/1048
-        fake = Faker()
+        # tests for https://github.com/joke2k/randum/issues/1048
+        fake = Randum()
         with pytest.raises(ValueError):
             assert fake.pyfloat(min_value=9999, max_value=9999)
 
     def test_us_ssn_valid(self):
-        from faker.providers.ssn.en_US import Provider
+        from randum.providers.ssn.en_US import Provider
 
         provider = Provider(self.generator)
         for i in range(1000):
@@ -269,7 +269,7 @@ class FactoryTestCase(unittest.TestCase):
             assert ssn[7:11] != '0000'
 
     def test_nl_BE_ssn_valid(self):
-        fake = Faker('nl_BE')
+        fake = Randum('nl_BE')
 
         for i in range(1000):
             ssn = fake.ssn()

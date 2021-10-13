@@ -1,15 +1,15 @@
 import re
 import unittest
 
-from faker import Faker
+from randum import Randum
 
 
 class TestFile(unittest.TestCase):
     """ Tests file """
 
     def setUp(self):
-        self.fake = Faker()
-        Faker.seed(0)
+        self.fake = Randum()
+        Randum.seed(0)
 
     def test_file_path(self):
         for _ in range(100):

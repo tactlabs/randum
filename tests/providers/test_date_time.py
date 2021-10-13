@@ -13,28 +13,28 @@ from datetime import timedelta, tzinfo
 import freezegun
 import pytest
 
-from faker import Faker
-from faker.providers.date_time import Provider as DatetimeProvider
-from faker.providers.date_time import change_year
-from faker.providers.date_time.ar_AA import Provider as ArProvider
-from faker.providers.date_time.ar_EG import Provider as EgProvider
-from faker.providers.date_time.bn_BD import Provider as BnBdProvider
-from faker.providers.date_time.cs_CZ import Provider as CsCzProvider
-from faker.providers.date_time.de_AT import Provider as DeAtProvider
-from faker.providers.date_time.de_DE import Provider as DeDeProvider
-from faker.providers.date_time.el_GR import Provider as ElGrProvider
-from faker.providers.date_time.es_ES import Provider as EsEsProvider
-from faker.providers.date_time.hy_AM import Provider as HyAmProvider
-from faker.providers.date_time.it_IT import Provider as ItItProvider
-from faker.providers.date_time.nl_NL import Provider as NlProvider
-from faker.providers.date_time.pl_PL import Provider as PlProvider
-from faker.providers.date_time.pt_BR import Provider as PtBrProvider
-from faker.providers.date_time.pt_PT import Provider as PtPtProvider
-from faker.providers.date_time.ro_RO import Provider as RoRoProvider
-from faker.providers.date_time.ru_RU import Provider as RuProvider
-from faker.providers.date_time.sk_SK import Provider as SkSkProvider
-from faker.providers.date_time.ta_IN import Provider as TaInProvider
-from faker.providers.date_time.tr_TR import Provider as TrTrProvider
+from randum import Randum
+from randum.providers.date_time import Provider as DatetimeProvider
+from randum.providers.date_time import change_year
+from randum.providers.date_time.ar_AA import Provider as ArProvider
+from randum.providers.date_time.ar_EG import Provider as EgProvider
+from randum.providers.date_time.bn_BD import Provider as BnBdProvider
+from randum.providers.date_time.cs_CZ import Provider as CsCzProvider
+from randum.providers.date_time.de_AT import Provider as DeAtProvider
+from randum.providers.date_time.de_DE import Provider as DeDeProvider
+from randum.providers.date_time.el_GR import Provider as ElGrProvider
+from randum.providers.date_time.es_ES import Provider as EsEsProvider
+from randum.providers.date_time.hy_AM import Provider as HyAmProvider
+from randum.providers.date_time.it_IT import Provider as ItItProvider
+from randum.providers.date_time.nl_NL import Provider as NlProvider
+from randum.providers.date_time.pl_PL import Provider as PlProvider
+from randum.providers.date_time.pt_BR import Provider as PtBrProvider
+from randum.providers.date_time.pt_PT import Provider as PtPtProvider
+from randum.providers.date_time.ro_RO import Provider as RoRoProvider
+from randum.providers.date_time.ru_RU import Provider as RuProvider
+from randum.providers.date_time.sk_SK import Provider as SkSkProvider
+from randum.providers.date_time.ta_IN import Provider as TaInProvider
+from randum.providers.date_time.tr_TR import Provider as TrTrProvider
 
 
 def is64bit():
@@ -65,8 +65,8 @@ utc = UTC()
 class TestKoKR(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('ko_KR')
-        Faker.seed(0)
+        self.fake = Randum('ko_KR')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -80,8 +80,8 @@ class TestKoKR(unittest.TestCase):
 class TestDateTime(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker()
-        Faker.seed(0)
+        self.fake = Randum()
+        Randum.seed(0)
 
     def assertBetween(self, date, start_date, end_date):
         assert date <= end_date
@@ -147,7 +147,7 @@ class TestDateTime(unittest.TestCase):
         assert DatetimeProvider._parse_date(timedelta(days=30)) == parsed
 
     def test_timezone_conversion(self):
-        from faker.providers.date_time import datetime_to_timestamp
+        from randum.providers.date_time import datetime_to_timestamp
 
         now = datetime.now(utc).replace(microsecond=0)
         timestamp = datetime_to_timestamp(now)
@@ -449,7 +449,7 @@ class TestDateTime(unittest.TestCase):
         self.assertBetween(random_date, _9_months_ago, _2_months_ago)
 
     def test_parse_timedelta(self):
-        from faker.providers.date_time import Provider
+        from randum.providers.date_time import Provider
 
         td = timedelta(days=7)
         seconds = Provider._parse_timedelta(td)
@@ -499,7 +499,7 @@ class TestDateTime(unittest.TestCase):
         assert series[0][0] == start
 
     def test_unix_time(self):
-        from faker.providers.date_time import datetime_to_timestamp
+        from randum.providers.date_time import datetime_to_timestamp
 
         for _ in range(100):
             now = datetime.now().replace(microsecond=0)
@@ -570,8 +570,8 @@ class TestDateTime(unittest.TestCase):
 class TestDeDe(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('de_DE')
-        Faker.seed(0)
+        self.fake = Randum('de_DE')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -585,8 +585,8 @@ class TestDeDe(unittest.TestCase):
 class TestPlPL(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('pl_PL')
-        Faker.seed(0)
+        self.fake = Randum('pl_PL')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -601,8 +601,8 @@ class TestHyAm(unittest.TestCase):
     """ Tests date_time in the hy_AM locale """
 
     def setUp(self):
-        self.fake = Faker('hy_AM')
-        Faker.seed(0)
+        self.fake = Randum('hy_AM')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -617,8 +617,8 @@ class TestHyAm(unittest.TestCase):
 
 class TestAr(unittest.TestCase):
     def test_ar_aa(self):
-        fake = Faker('ar')
-        Faker.seed(0)
+        fake = Randum('ar')
+        Randum.seed(0)
 
         # AM/PM
         assert fake.am_pm() in ArProvider.AM_PM.values()
@@ -636,8 +636,8 @@ class TestAr(unittest.TestCase):
         )
 
     def test_ar_eg(self):
-        fake = Faker('ar_EG')
-        Faker.seed(0)
+        fake = Randum('ar_EG')
+        Randum.seed(0)
 
         # AM/PM
         assert fake.am_pm() in ArProvider.AM_PM.values()
@@ -666,8 +666,8 @@ class DatesOfBirth(unittest.TestCase):
     """
 
     def setUp(self):
-        self.fake = Faker()
-        Faker.seed(0)
+        self.fake = Randum()
+        Randum.seed(0)
 
     def test_date_of_birth(self):
         dob = self.fake.date_of_birth()
@@ -764,14 +764,14 @@ class TestFilPh(unittest.TestCase):
 
     def setUp(self):
         self.setup_constants()
-        self.setup_faker()
+        self.setup_randum()
 
-    def setup_faker(self):
-        self.fake = Faker('fil_PH')
-        Faker.seed(0)
+    def setup_randum(self):
+        self.fake = Randum('fil_PH')
+        Randum.seed(0)
 
     def setup_constants(self):
-        from faker.providers.date_time.fil_PH import Provider
+        from randum.providers.date_time.fil_PH import Provider
         self.day_names = Provider.DAY_NAMES.values()
         self.month_names = Provider.MONTH_NAMES.values()
 
@@ -786,17 +786,17 @@ class TestFilPh(unittest.TestCase):
 
 class TestTlPh(TestFilPh):
 
-    def setup_faker(self):
-        self.fake = Faker('tl_PH')
-        Faker.seed(0)
+    def setup_randum(self):
+        self.fake = Randum('tl_PH')
+        Randum.seed(0)
 
 
 class TestTaIN(unittest.TestCase):
     """ Tests date_time in the ta_IN locale """
 
     def setUp(self):
-        self.fake = Faker('ta_IN')
-        Faker.seed(0)
+        self.fake = Randum('ta_IN')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -813,8 +813,8 @@ class TestRuRu(unittest.TestCase):
     """ Tests date_time in the ru_RU locale """
 
     def setUp(self):
-        self.fake = Faker('ru_RU')
-        Faker.seed(0)
+        self.fake = Randum('ru_RU')
+        Randum.seed(0)
 
     def test_day(self):
         for _ in range(50):
@@ -838,8 +838,8 @@ class TestRuRu(unittest.TestCase):
 class TestCsCz(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('cs_CZ')
-        Faker.seed(0)
+        self.fake = Randum('cs_CZ')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -853,8 +853,8 @@ class TestCsCz(unittest.TestCase):
 class TestDeAt(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('de_AT')
-        Faker.seed(0)
+        self.fake = Randum('de_AT')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -868,8 +868,8 @@ class TestDeAt(unittest.TestCase):
 class TestEsEs(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('es_ES')
-        Faker.seed(0)
+        self.fake = Randum('es_ES')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -883,8 +883,8 @@ class TestEsEs(unittest.TestCase):
 class TestItIt(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('it_IT')
-        Faker.seed(0)
+        self.fake = Randum('it_IT')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -898,8 +898,8 @@ class TestItIt(unittest.TestCase):
 class TestSkSk(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('sk_SK')
-        Faker.seed(0)
+        self.fake = Randum('sk_SK')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -914,8 +914,8 @@ class TestThTh(unittest.TestCase):
     num_sample_runs = 50
 
     def setUp(self):
-        self.fake = Faker('th_TH')
-        Faker.seed(0)
+        self.fake = Randum('th_TH')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -1095,8 +1095,8 @@ class TestThTh(unittest.TestCase):
 class TestTrTr(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('tr_TR')
-        Faker.seed(0)
+        self.fake = Randum('tr_TR')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -1110,8 +1110,8 @@ class TestTrTr(unittest.TestCase):
 class TestPtBr(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('pt_BR')
-        Faker.seed(0)
+        self.fake = Randum('pt_BR')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -1125,8 +1125,8 @@ class TestPtBr(unittest.TestCase):
 class TestPtPt(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('pt_PT')
-        Faker.seed(0)
+        self.fake = Randum('pt_PT')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -1140,8 +1140,8 @@ class TestPtPt(unittest.TestCase):
 class TestRoRo(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('ro_RO')
-        Faker.seed(0)
+        self.fake = Randum('ro_RO')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -1155,8 +1155,8 @@ class TestRoRo(unittest.TestCase):
 class TestBnBd(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('bn_BD')
-        Faker.seed(0)
+        self.fake = Randum('bn_BD')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -1170,8 +1170,8 @@ class TestBnBd(unittest.TestCase):
 class TestNlNl(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('nl_NL')
-        Faker.seed(0)
+        self.fake = Randum('nl_NL')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()
@@ -1184,8 +1184,8 @@ class TestNlNl(unittest.TestCase):
 
 class TestElGr(unittest.TestCase):
     def setUp(self):
-        self.fake = Faker('el-GR')
-        Faker.seed(0)
+        self.fake = Randum('el-GR')
+        Randum.seed(0)
 
     def test_day(self):
         day = self.fake.day_of_week()

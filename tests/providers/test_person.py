@@ -4,38 +4,38 @@ import unittest
 
 from unittest import mock
 
-from faker import Faker
-from faker.providers.person.ar_AA import Provider as ArProvider
-from faker.providers.person.cs_CZ import Provider as CsCZProvider
-from faker.providers.person.en import Provider as EnProvider
-from faker.providers.person.en_IE import Provider as EnIEProvider
-from faker.providers.person.en_IN import Provider as EnINProvider
-from faker.providers.person.en_US import Provider as EnUSProvider
-from faker.providers.person.es_ES import Provider as EsESProvider
-from faker.providers.person.fi_FI import Provider as FiProvider
-from faker.providers.person.ga_IE import Provider as GaIEProvider
-from faker.providers.person.he_IL import Provider as HeILProvider
-from faker.providers.person.hy_AM import Provider as HyAmProvider
-from faker.providers.person.ne_NP import Provider as NeProvider
-from faker.providers.person.or_IN import Provider as OrINProvider
-from faker.providers.person.pl_PL import Provider as PlPLProvider
-from faker.providers.person.pl_PL import checksum_identity_card_number as pl_checksum_identity_card_number
-from faker.providers.person.pt_PT import Provider as PtPtProvider
-from faker.providers.person.ru_RU import Provider as RuProvider
-from faker.providers.person.ru_RU import translit
-from faker.providers.person.sv_SE import Provider as SvSEProvider
-from faker.providers.person.ta_IN import Provider as TaINProvider
-from faker.providers.person.th_TH import Provider as ThThProvider
-from faker.providers.person.zh_CN import Provider as ZhCNProvider
-from faker.providers.person.zh_TW import Provider as ZhTWProvider
+from randum import Randum
+from randum.providers.person.ar_AA import Provider as ArProvider
+from randum.providers.person.cs_CZ import Provider as CsCZProvider
+from randum.providers.person.en import Provider as EnProvider
+from randum.providers.person.en_IE import Provider as EnIEProvider
+from randum.providers.person.en_IN import Provider as EnINProvider
+from randum.providers.person.en_US import Provider as EnUSProvider
+from randum.providers.person.es_ES import Provider as EsESProvider
+from randum.providers.person.fi_FI import Provider as FiProvider
+from randum.providers.person.ga_IE import Provider as GaIEProvider
+from randum.providers.person.he_IL import Provider as HeILProvider
+from randum.providers.person.hy_AM import Provider as HyAmProvider
+from randum.providers.person.ne_NP import Provider as NeProvider
+from randum.providers.person.or_IN import Provider as OrINProvider
+from randum.providers.person.pl_PL import Provider as PlPLProvider
+from randum.providers.person.pl_PL import checksum_identity_card_number as pl_checksum_identity_card_number
+from randum.providers.person.pt_PT import Provider as PtPtProvider
+from randum.providers.person.ru_RU import Provider as RuProvider
+from randum.providers.person.ru_RU import translit
+from randum.providers.person.sv_SE import Provider as SvSEProvider
+from randum.providers.person.ta_IN import Provider as TaINProvider
+from randum.providers.person.th_TH import Provider as ThThProvider
+from randum.providers.person.zh_CN import Provider as ZhCNProvider
+from randum.providers.person.zh_TW import Provider as ZhTWProvider
 
 
 class TestAr(unittest.TestCase):
     """ Tests person in the ar locale """
 
     def setUp(self):
-        self.fake = Faker('ar')
-        Faker.seed(0)
+        self.fake = Randum('ar')
+        Randum.seed(0)
 
     def test_first_name(self):
         # General first name
@@ -90,8 +90,8 @@ class TestJaJP(unittest.TestCase):
     """ Tests person in the ja_JP locale """
 
     def setUp(self):
-        self.fake = Faker('ja')
-        Faker.seed(0)
+        self.fake = Randum('ja')
+        Randum.seed(0)
 
     def test_person(self):
         name = self.fake.name()
@@ -170,8 +170,8 @@ class TestJaJP(unittest.TestCase):
 class TestNeNP(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('ne_NP')
-        Faker.seed(0)
+        self.fake = Randum('ne_NP')
+        Randum.seed(0)
 
     def test_names(self):
         name = self.fake.name().split()
@@ -188,8 +188,8 @@ class TestNeNP(unittest.TestCase):
 class TestFiFI(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('fi_FI')
-        Faker.seed(0)
+        self.fake = Randum('fi_FI')
+        Randum.seed(0)
 
     def test_gender_first_names(self):
         female_name = self.fake.first_name_female()
@@ -211,8 +211,8 @@ class TestFiFI(unittest.TestCase):
 class TestSvSE(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('sv_SE')
-        Faker.seed(0)
+        self.fake = Randum('sv_SE')
+        Randum.seed(0)
 
     def test_gender_first_names(self):
         """simple test to verify that we are pulling gender specific names"""
@@ -227,8 +227,8 @@ class TestSvSE(unittest.TestCase):
 class TestPlPL(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('pl_PL')
-        Faker.seed(0)
+        self.fake = Randum('pl_PL')
+        Randum.seed(0)
 
     def test_identity_card_number_checksum(self):
         assert pl_checksum_identity_card_number(['A', 'I', 'S', 8, 5, 0, 2, 1, 4]) == 8
@@ -308,8 +308,8 @@ class TestPlPL(unittest.TestCase):
 class TestCsCZ(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('cs_CZ')
-        Faker.seed(0)
+        self.fake = Randum('cs_CZ')
+        Randum.seed(0)
 
     def test_name_male(self):
         male_name = self.fake.name_male()
@@ -356,8 +356,8 @@ class TestThTh(unittest.TestCase):
     """ Tests person in the th_TH locale """
 
     def setUp(self):
-        self.fake = Faker('th_TH')
-        Faker.seed(0)
+        self.fake = Randum('th_TH')
+        Randum.seed(0)
 
     def test_first_name(self):
         # General first name
@@ -389,8 +389,8 @@ class TestThTh(unittest.TestCase):
 class TestZhCN(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('zh_CN')
-        Faker.seed(0)
+        self.fake = Randum('zh_CN')
+        Randum.seed(0)
 
     def test_last_name(self):
         # There's no gender-specific last name in Chinese.
@@ -472,8 +472,8 @@ class TestZhCN(unittest.TestCase):
 class TestZhTW(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('zh_TW')
-        Faker.seed(0)
+        self.fake = Randum('zh_TW')
+        Randum.seed(0)
 
     def test_last_name(self):
         # There's no gender-specific last name in Chinese.
@@ -556,8 +556,8 @@ class TestHyAM(unittest.TestCase):
     """ Tests person in the hy_AM locale """
 
     def setUp(self):
-        self.fake = Faker('hy_AM')
-        Faker.seed(0)
+        self.fake = Randum('hy_AM')
+        Randum.seed(0)
 
     def test_name(self):
         # General name
@@ -616,8 +616,8 @@ class TestHyAM(unittest.TestCase):
 class TestTaIN(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('ta_IN')
-        Faker.seed(0)
+        self.fake = Randum('ta_IN')
+        Randum.seed(0)
 
     def test_gender_first_names(self):
         """simple test to verify that we are pulling gender specific names"""
@@ -633,8 +633,8 @@ class TestRuRU(unittest.TestCase):
     """ Tests person in the ru_RU locale """
 
     def setUp(self):
-        self.fake = Faker('ru_RU')
-        Faker.seed(0)
+        self.fake = Randum('ru_RU')
+        Randum.seed(0)
 
     def test_translit(self):
         assert translit('Александр Сергеевич Пушкин') == 'Aleksandr Sergeevich Pushkin'
@@ -680,8 +680,8 @@ class TestEsES(unittest.TestCase):
     """Tests person in the es_ES locale."""
 
     def setUp(self):
-        self.fake = Faker('es_ES')
-        Faker.seed(0)
+        self.fake = Randum('es_ES')
+        Randum.seed(0)
 
     def test_language_name(self):
         language_name = self.fake.language_name()
@@ -692,8 +692,8 @@ class TestHeIL(unittest.TestCase):
     """Tests person in the he_IL locale."""
 
     def setUp(self):
-        self.fake = Faker('he_IL')
-        Faker.seed(0)
+        self.fake = Randum('he_IL')
+        Randum.seed(0)
 
     def test_language_name(self):
         language_name = self.fake.language_name()
@@ -716,8 +716,8 @@ class TestPtPt(unittest.TestCase):
     """Tests person in the pt_PT locale."""
 
     def setUp(self):
-        self.fake = Faker('pt_PT')
-        Faker.seed(0)
+        self.fake = Randum('pt_PT')
+        Randum.seed(0)
 
     def test_male_first_name(self):
         first_name_male = self.fake.first_name_male()
@@ -736,8 +736,8 @@ class TestUs(unittest.TestCase):
     """ Tests person in the en_US locale """
 
     def setUp(self):
-        self.fake = Faker('en_US')
-        Faker.seed(0)
+        self.fake = Randum('en_US')
+        Randum.seed(0)
 
     def test_first_names(self):
         # General first name
@@ -801,8 +801,8 @@ class TestEn(unittest.TestCase):
     """ Tests person in the en locale """
 
     def setUp(self):
-        self.fake = Faker('en')
-        Faker.seed(0)
+        self.fake = Randum('en')
+        Randum.seed(0)
 
     def test_suffix(self):
         # Traditional suffix -- provider does not offer a nonbinary suffix at this time
@@ -814,8 +814,8 @@ class TestEn(unittest.TestCase):
 class TestOrIN(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('or_IN')
-        Faker.seed(0)
+        self.fake = Randum('or_IN')
+        Randum.seed(0)
 
     def test_first_names(self):
         """simple test to verify that we are pulling gender specific names"""
@@ -846,8 +846,8 @@ class TestEnIN(unittest.TestCase):
     """ Tests person in the en_IN locale """
 
     def setUp(self):
-        self.fake = Faker('en_IN')
-        Faker.seed(0)
+        self.fake = Randum('en_IN')
+        Randum.seed(0)
 
     def test_first_name(self):
         first_name = self.fake.first_name()
@@ -862,9 +862,9 @@ class TestEnIE(unittest.TestCase):
     """ Tests person in the en-IE locale """
 
     def setUp(self):
-        self.fake = Faker('en-ie')
+        self.fake = Randum('en-ie')
         self.provider = EnIEProvider
-        Faker.seed(0)
+        Randum.seed(0)
 
     def test_first_name(self):
         # General first name
@@ -917,6 +917,6 @@ class TestGaIE(TestEnIE):
     """ Tests person in the ga-IE locale """
 
     def setUp(self):
-        self.fake = Faker('ga-ie')
+        self.fake = Randum('ga-ie')
         self.provider = GaIEProvider
-        Faker.seed(0)
+        Randum.seed(0)

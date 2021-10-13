@@ -1,8 +1,8 @@
 """TEST NOTES:
 
-The following tests cover cases where a ``faker_session_locale`` fixture was defined
-by the user as well as non-autouse ``faker_locale`` and ``faker_seed`` fixtures. The
-resulting behavior of the ``faker`` fixture will vary dependening on which fixtures
+The following tests cover cases where a ``randum_session_locale`` fixture was defined
+by the user as well as non-autouse ``randum_locale`` and ``randum_seed`` fixtures. The
+resulting behavior of the ``randum`` fixture will vary dependening on which fixtures
 are injected.
 """
 
@@ -10,47 +10,47 @@ from random import Random
 
 import pytest
 
-from faker.contrib.pytest.plugin import DEFAULT_SEED
+from randum.contrib.pytest.plugin import DEFAULT_SEED
 from tests.pytest.session_overrides.session_locale import _MODULE_LOCALES
 
 
 @pytest.fixture()
-def faker_locale():
+def randum_locale():
     return ['it_IT']
 
 
 @pytest.fixture()
-def faker_seed():
+def randum_seed():
     return 4761
 
 
-def test_no_injection(_session_faker, faker):
+def test_no_injection(_session_randum, randum):
     random = Random(DEFAULT_SEED)
-    assert faker == _session_faker
-    assert faker.locales == _MODULE_LOCALES
-    assert faker.random != random
-    assert faker.random.getstate() == random.getstate()
+    assert randum == _session_randum
+    assert randum.locales == _MODULE_LOCALES
+    assert randum.random != random
+    assert randum.random.getstate() == random.getstate()
 
 
-def test_inject_faker_locale(_session_faker, faker, faker_locale):
+def test_inject_randum_locale(_session_randum, randum, randum_locale):
     random = Random(DEFAULT_SEED)
-    assert faker != _session_faker
-    assert faker.locales == faker_locale
-    assert faker.random != random
-    assert faker.random.getstate() == random.getstate()
+    assert randum != _session_randum
+    assert randum.locales == randum_locale
+    assert randum.random != random
+    assert randum.random.getstate() == random.getstate()
 
 
-def test_inject_faker_seed(_session_faker, faker, faker_seed):
-    random = Random(faker_seed)
-    assert faker == _session_faker
-    assert faker.locales == _MODULE_LOCALES
-    assert faker.random != random
-    assert faker.random.getstate() == random.getstate()
+def test_inject_randum_seed(_session_randum, randum, randum_seed):
+    random = Random(randum_seed)
+    assert randum == _session_randum
+    assert randum.locales == _MODULE_LOCALES
+    assert randum.random != random
+    assert randum.random.getstate() == random.getstate()
 
 
-def test_inject_faker_seed_and_locale(_session_faker, faker, faker_locale, faker_seed):
-    random = Random(faker_seed)
-    assert faker != _session_faker
-    assert faker.locales == faker_locale
-    assert faker.random != random
-    assert faker.random.getstate() == random.getstate()
+def test_inject_randum_seed_and_locale(_session_randum, randum, randum_locale, randum_seed):
+    random = Random(randum_seed)
+    assert randum != _session_randum
+    assert randum.locales == randum_locale
+    assert randum.random != random
+    assert randum.random.getstate() == random.getstate()

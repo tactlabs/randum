@@ -3,16 +3,16 @@ import unittest
 
 from decimal import Decimal
 
-from faker import Faker
-from faker.providers.geo.pt_PT import Provider as PtPtProvider
+from randum import Randum
+from randum.providers.geo.pt_PT import Provider as PtPtProvider
 
 
 class TestGlobal(unittest.TestCase):
     """ Tests geographic locations regardless of locale"""
 
     def setUp(self):
-        self.fake = Faker()  # No locale specified, gets global for this provider
-        Faker.seed(0)
+        self.fake = Randum()  # No locale specified, gets global for this provider
+        Randum.seed(0)
 
     def test_local_latlng(self):
         loc = self.fake.local_latlng(country_code='US')
@@ -31,8 +31,8 @@ class TestEnUS(unittest.TestCase):
     """ Tests geographic locations in the en_US locale """
 
     def setUp(self):
-        self.fake = Faker('en_US')
-        Faker.seed(0)
+        self.fake = Randum('en_US')
+        Randum.seed(0)
 
     def test_latitude(self):
         lat = self.fake.latitude()
@@ -84,8 +84,8 @@ class TestDeAT(unittest.TestCase):
     """ Tests in addresses in the de_AT locale """
 
     def setUp(self):
-        self.fake = Faker('de_AT')
-        Faker.seed(0)
+        self.fake = Randum('de_AT')
+        Randum.seed(0)
 
     def test_local_latitude(self):
         local_latitude = self.fake.local_latitude()
@@ -99,8 +99,8 @@ class TestDeAT(unittest.TestCase):
 class TestPtPT(unittest.TestCase):
 
     def setUp(self):
-        self.fake = Faker('pt_PT')
-        Faker.seed(0)
+        self.fake = Randum('pt_PT')
+        Randum.seed(0)
 
     def test_nationality(self):
         nationality = self.fake.nationality()
@@ -110,11 +110,11 @@ class TestPtPT(unittest.TestCase):
 
 class TestTrTr(TestEnUS):
     def setUp(self):
-        self.fake = Faker('tr_TR')
-        Faker.seed(0)
+        self.fake = Randum('tr_TR')
+        Randum.seed(0)
 
 
 class TestEnIe(TestEnUS):
     def setUp(self):
-        self.fake = Faker('en_IE')
-        Faker.seed(0)
+        self.fake = Randum('en_IE')
+        Randum.seed(0)

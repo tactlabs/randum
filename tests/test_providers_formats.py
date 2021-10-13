@@ -2,8 +2,8 @@ import re
 
 import pytest
 
-from faker import Factory
-from faker.config import AVAILABLE_LOCALES, PROVIDERS
+from randum import Factory
+from randum.config import AVAILABLE_LOCALES, PROVIDERS
 
 locales = AVAILABLE_LOCALES
 
@@ -20,11 +20,11 @@ def test_no_invalid_formats(locale):
     is not surrounded by spaces. This is a quick way to make sure that no
     string is generated with "double spaces", starting spaces or ending spaces.
     """
-    faker = Factory.create(locale)
+    randum = Factory.create(locale)
     errors = []
 
     for provider in PROVIDERS:
-        if provider == "faker.providers":
+        if provider == "randum.providers":
             continue
         prov_cls, lang = Factory._get_provider_class(provider, locale)
         assert lang == locale
@@ -44,7 +44,7 @@ def test_no_invalid_formats(locale):
                 for match in find_group.finditer(format):
                     group = match.group(1)
                     try:
-                        attr = faker.format(group)
+                        attr = randum.format(group)
                     except AttributeError as e:
                         errors.append(str(e))
                         continue

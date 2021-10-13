@@ -1,12 +1,12 @@
 import pytest
 
-from faker import Faker
-from faker.exceptions import UniquenessException
+from randum import Randum
+from randum.exceptions import UniquenessException
 
 
 class TestUniquenessClass:
     def test_uniqueness(self):
-        fake = Faker("en_US")
+        fake = Randum("en_US")
 
         names = set()
         # There are (at time of writing 690) first names in the
@@ -18,7 +18,7 @@ class TestUniquenessClass:
             names.add(first_name)
 
     def test_sanity_escape(self):
-        fake = Faker()
+        fake = Randum()
 
         # Those of you who are especially astute may realise
         # there are only 2 booleans, so the third boolean cannot
@@ -28,7 +28,7 @@ class TestUniquenessClass:
                 _ = fake.unique.boolean()
 
     def test_uniqueness_clear(self):
-        fake = Faker()
+        fake = Randum()
 
         for i in range(2):
             fake.unique.boolean()
@@ -43,7 +43,7 @@ class TestUniquenessClass:
         """Calls through the "unique" portal will only affect
         calls with that specific function signature.
         """
-        fake = Faker()
+        fake = Randum()
 
         for i in range(10):
             fake.unique.random_int(min=1, max=10)
@@ -56,7 +56,7 @@ class TestUniquenessClass:
         """Accessing non-functions through the `.unique` attribute
         will throw a TypeError."""
 
-        fake = Faker()
+        fake = Randum()
 
         with pytest.raises(TypeError, match="Accessing non-functions through .unique is not supported."):
             fake.unique.locales
