@@ -1072,6 +1072,7 @@ class Provider(PersonProvider):
         'Zaiden', 'Zain', 'Zaire', 'Zakary', 'Zander', 'Zane', 'Zavier',
         'Zavion', 'Zayden', 'Zayne', 'Zeb', 'Zebulon', 'Zechariah', 'Zed',
         'Zeke', 'Zenas', 'Zeno', 'Zigmund', 'Zion', 'Zollie',
+        'Ishita', 'Sanjjushri', 'Febi', 'Ana', 'Harini', 'Chaaya', 
     )
 
     first_names = first_names_male + first_names_female
@@ -1150,7 +1151,7 @@ class Provider(PersonProvider):
         'Wilderman', 'Wilkinson', 'Will', 'Williamson', 'Willms', 'Windler',
         'Wintheiser', 'Wisoky', 'Wisozk', 'Witting', 'Wiza', 'Wolf', 'Wolff',
         'Wuckert', 'Wunsch', 'Wyman', 'Yost', 'Yundt', 'Zboncak', 'Zemlak',
-        'Ziemann', 'Zieme', 'Zulauf',
+        'Ziemann', 'Zieme', 'Zulauf', 'Varshini', 'Gopalakrishnan', 'Sankar',
     )
 
     prefixes_female = ('Mrs.', 'Ms.', 'Miss', 'Dr.')
