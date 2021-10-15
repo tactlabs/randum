@@ -11,7 +11,9 @@ class Provider(BaseProvider):
 
     def middle_name(self):
 
-        middle_names = ['Jai','Jeeva','William','David','laligam','Mandi','Jey']
+        middle_names = ['Jai','Jeeva','William','David','laligam','Mandi','Jey','Anika',
+                        'Bhagya:','Chahna','Gana','Henry','Robert','Alexander','Lucas','Maximus',
+                        'Ryder','Angel','Beven','Zion','Tristan','Brixton','Thatcher','Kenji']
 
         result = self.random_element(middle_names)
 
@@ -19,7 +21,9 @@ class Provider(BaseProvider):
 
     def girl_middle_names(self):
 
-        g_middle_names = ['Jay','Iris','Ameera','Anisha','Amori','Betty','Rumble','Honey','Sunny']
+        g_middle_names = ['Jay','Iris','Izna','Anisha','Amori','Betty','Rumble','Honey','Sunny',
+                          'Kaia','Ladli','Mahika','Mirai','Nira','Omala','Prisha','Ruhi','Salena',
+                          'Suvarna','Taara','Udaya','Vahini','Zaina','Vidya','Urja','Sneha','Rina']
 
         result = self.random_element(g_middle_names)
 
