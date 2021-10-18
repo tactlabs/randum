@@ -16,7 +16,10 @@ class Provider(BaseProvider):
                 'Blockchain','Internet of Things (IoT)','Wearables and augmented humans','Big Data and augmented analytics','Intelligent spaces and smart places',
                 'Cloud and edge computing','Digitally extended realities',' Digital twins','Natural language processing','Voice interfaces and chatbots',
                 'Computer vision and facial recognition','Robots and cobots','Autonomous vehicles',' Genomics and gene editing','Machine co-creativity and augmented design',
-                'Digital platforms', 'Deep Learning'
+                'Digital platforms', 'Deep Learning', 'Voice Technology', 'LOT', 'Biometrics',
+                'Robotics', 'NFT', 'Computer Network', 'Serverless computing', '3D printing',
+                'Drones', 'Cognitive Computing', 'DevOps', 'Internet of behaviors (IoB)', 'Human augmentation ',
+                'Distributed cloud'
                ]
 
         result = self.random_element(tech)
