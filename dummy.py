@@ -9,7 +9,8 @@ def startpy():
     # print(rand_.middle_name())
     # print(rand_.girl_middle_names())
     # print(rand_.technology())
-    print(rand_.vehicles())
+    # print(rand_.vehicles())
+    print(rand_.restaurants())
 
 if __name__ == '__main__':
     startpy()
